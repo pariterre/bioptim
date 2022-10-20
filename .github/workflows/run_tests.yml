@@ -50,19 +50,19 @@ jobs:
       - name: Install extra packages
         run: mamba install pytest-cov black pytest pytest-cov codecov -cconda-forge
 
-      - name: Install ACADOS on Linux
-        run: |
-          cd external
-          ./acados_install_linux.sh
-          cd ..
-        if: matrix.label == 'linux-64'
-
-      - name: Install ACADOS on Mac
-        run: |
-          cd external
-          ./acados_install_mac.sh
-          cd ..
-        if: matrix.label == 'osx-64'
+#      - name: Install ACADOS on Linux
+#        run: |
+#          cd external
+#          ./acados_install_linux.sh
+#          cd ..
+#        if: matrix.label == 'linux-64'
+#
+#      - name: Install ACADOS on Mac
+#        run: |
+#          cd external
+#          ./acados_install_mac.sh
+#          cd ..
+#        if: matrix.label == 'osx-64'
 
       - name: Run tests
         shell: bash -l {0}
