@@ -1,11 +1,22 @@
 name: Run the tests
 
 on: [pull_request]
-
 jobs:
-  default-shell:
-    name: Default shell
-    runs-on: "ubuntu-latest"
+  build:
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-20.04
+            label: linux-64
+            prefix: /usr/share/miniconda3/envs/bioptim
+          - os: macos-latest
+            label: osx-64
+            prefix: /Users/runner/miniconda3/envs/bioptim
+          - os: windows-latest
+            label: win-64
+            prefix: C:\Miniconda3\envs\bioptim
+    name: ${{ matrix.label }}
+    runs-on: ${{ matrix.os }}
     defaults:
       run:
         shell: bash -l {0}
@@ -21,14 +32,11 @@ jobs:
           activate-environment: bioptim
           environment-file: environment.yml
         
-      - name: Print info
+      - name: Print mamba info
         run: | 
           mamba config --show
           mamba info
           mamba list
-  
-      - name: Coucou
-        run: python -c "import biorbd"
           
       - name: Install extra dependencies
         run: mamba install pytest-cov black pytest pytest-cov codecov -cconda-forge
