@@ -15,16 +15,14 @@ jobs:
       - name: Setup environment
         uses: conda-incubator/setup-miniconda@v2
         with:
-          mamba-version: "*"
-          use-mamba: true
           activate-environment: bioptim
           environment-file: environment.yml
         
       - name: Print info
         run: | 
-          mamba config --show
-          mamba info
-          mamba list
+          conda config --show
+          conda info
+          conda list
   
       - name: Coucou
         shell: bash
