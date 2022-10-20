@@ -46,6 +46,7 @@ jobs:
       - name: Update environment
         run: | 
           mamba env update -n bioptim -f environment.yml
+          conda init bash
           conda activate bioptim
         if: steps.cache.outputs.cache-hit != 'true'
 
