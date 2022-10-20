@@ -50,11 +50,6 @@ jobs:
       - name: Install extra packages
         run: mamba install pytest-cov black pytest pytest-cov codecov -cconda-forge
 
-      - name: Check if blacked
-        shell: bash
-        run: black . -l120 --exclude "external/*" --check
-        if: matrix.label == 'linux-64'
-
       - name: Install ACADOS on Linux
         run: |
           cd external
