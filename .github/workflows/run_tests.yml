@@ -47,9 +47,6 @@ jobs:
         run: mamba env update -n bioptim -f environment.yml
         if: steps.cache.outputs.cache-hit != 'true'
 
-      - name: Install extra packages
-        run: mamba install pytest-cov black pytest pytest-cov codecov -cconda-forge
-
 #      - name: Install ACADOS on Linux
 #        run: |
 #          cd external
@@ -67,6 +64,7 @@ jobs:
       - name: Run tests
         shell: bash
         run: |
+          mamba install pytest-cov black pytest pytest-cov codecov -cconda-forge
           pytest -v --color=yes --cov-report term-missing --cov=bioptim tests
 
       - name: Install bioptim
