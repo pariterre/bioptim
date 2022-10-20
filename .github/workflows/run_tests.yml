@@ -48,7 +48,7 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true'
 
       - name: Install extra packages
-        run: mamba env install pytest-cov black pytest pytest-cov codecov -cconda-forge
+        run: mamba install pytest-cov black pytest pytest-cov codecov -cconda-forge
 
       - name: Check if blacked
         run: black . -l120 --exclude "external/*" --check
