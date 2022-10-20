@@ -15,6 +15,9 @@ jobs:
       - name: Setup environment
         uses: conda-incubator/setup-miniconda@v2
         with:
+          miniforge-variant: Mambaforge
+          miniforge-version: latest
+          use-mamba: true
           activate-environment: bioptim
           environment-file: environment.yml
         
@@ -25,24 +28,20 @@ jobs:
           conda list
   
       - name: Coucou
-        shell: bash
         run: python -c "import biorbd"
           
       - name: Install extra dependencies
         run: mamba install pytest-cov black pytest pytest-cov codecov -cconda-forge
         
       - name: Run the actual tests
-        shell: bash
         run: pytest -v --color=yes --cov-report term-missing --cov=bioptim tests
           
       - name: Test installed version of bioptim
-        shell: bash
         run: | 
           python setup.py install
           cd
           python -c "import bioptim"
         
       - name: Upload coverage to Codecov
-        shell: bash
         run: codecov
         if: matrix.label == 'linux-64'
