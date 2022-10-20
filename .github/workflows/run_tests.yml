@@ -44,9 +44,16 @@ jobs:
         id: cache
 
       - name: Update environment
-        run: mamba env update -n bioptim -f environment.yml
+        run: | 
+          mamba env update -n bioptim -f environment.yml
+          mamba env list
         if: steps.cache.outputs.cache-hit != 'true'
 
+      - name: Install extra dependencies
+        run: |
+          mamba install pytest-cov black pytest pytest-cov codecov -cconda-forge
+          mamba list
+        
 #      - name: Install ACADOS on Linux
 #        run: |
 #          cd external
@@ -64,7 +71,6 @@ jobs:
       - name: Run tests
         shell: bash
         run: |
-          mamba install pytest-cov black pytest pytest-cov codecov -cconda-forge
           pytest -v --color=yes --cov-report term-missing --cov=bioptim tests
 
       - name: Install bioptim
