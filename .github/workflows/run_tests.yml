@@ -65,14 +65,15 @@ jobs:
 #        if: matrix.label == 'osx-64'
 
       - name: Run tests
-        shell: bash -l {0}
-        run: pytest -v --color=yes --cov-report term-missing --cov=bioptim tests
+        shell: bash
+        run: |
+          pytest -v --color=yes --cov-report term-missing --cov=bioptim tests
 
       - name: Install bioptim
-        shell: bash -l {0}
+        shell: bash
         run: python setup.py install
 
       - name: Upload coverage to Codecov
-        shell: bash -l {0}
+        shell: bash
         run: codecov
         if: matrix.label == 'linux-64'
