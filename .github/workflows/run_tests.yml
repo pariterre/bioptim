@@ -51,6 +51,7 @@ jobs:
         run: mamba install pytest-cov black pytest pytest-cov codecov -cconda-forge
 
       - name: Check if blacked
+        shell: bash -l {0}
         run: black . -l120 --exclude "external/*" --check
         if: matrix.label == 'linux-64'
 
