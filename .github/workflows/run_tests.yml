@@ -23,9 +23,9 @@ jobs:
         
       - name: Print info
         run: | 
-          conda config --show
-          conda info
-          conda list
+          mamba config --show
+          mamba info
+          mamba list
   
       - name: Coucou
         run: python -c "import biorbd"
