@@ -58,6 +58,6 @@ test_script:
 #---------------------------------#
 
 # on successful build
-on_success:
-  - sh: if [[ $CI_MACOS == true ]]; then codecov; fi
+# on_success:
+  # - sh: if [[ $CI_MACOS == true ]]; then codecov; fi
 
