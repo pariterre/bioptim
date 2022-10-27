@@ -35,29 +35,14 @@ install:
   - conda activate bioptim
   - conda install pytest-cov black pytest pytest-cov codecov -cconda-forge
   - conda list
-  - sh: if [[ $CI_LINUX == true ]]; then black . -l120 --exclude "external/*" --check; fi
-  
-  # Install ACADOS on LINUX and MAC
-  - cd external
-  - sh: if [[ $CI_LINUX == true ]]; then  ./acados_install_linux.sh; else ./acados_install_mac.sh; fi
-  - cd ..
   
 # to run your custom scripts instead of automatic tests
 test_script:
-  - pytest -v --color=yes --cov-report term-missing --cov=bioptim tests
+  - pytest -v --color=yes --cov-report term-missing --cov=bioptim tests/skip_test__global_plots.py
   - python setup.py install
   - sh: cd
   - cmd: cd C:/
   - python -c "import bioptim"
   - sh: cd $BIOPTIM_FOLDER
   - cmd: cd %BIOPTIM_FOLDER%
-
-
-#---------------------------------#
-#        global handlers          #
-#---------------------------------#
-
-# on successful build
-# on_success:
-  # - sh: if [[ $CI_MACOS == true ]]; then codecov; fi
 
