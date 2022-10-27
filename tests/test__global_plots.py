@@ -33,36 +33,38 @@ def test_plot_graphs_one_phase():
     sol.graphs(automatically_organize=False)
 
 
-# def test_plot_merged_graphs():
-#     # Load graphs_one_phase
-#     from bioptim.examples.muscle_driven_ocp import muscle_excitations_tracker as ocp_module
-#
-#     bioptim_folder = os.path.dirname(ocp_module.__file__)
-#
-#     # Define the problem
-#     model_path = bioptim_folder + "/models/arm26.bioMod"
-#     biorbd_model = biorbd.Model(model_path)
-#     final_time = 0.1
-#     n_shooting = 5
-# 
-#     # Generate random data to fit
-#     np.random.seed(42)
-#     t, markers_ref, x_ref, muscle_excitations_ref = ocp_module.generate_data(biorbd_model, final_time, n_shooting)
-#
-#     biorbd_model = biorbd.Model(model_path)  # To prevent from free variable, the model must be reloaded
-#     ocp = ocp_module.prepare_ocp(
-#         biorbd_model,
-#         final_time,
-#         n_shooting,
-#         markers_ref,
-#         muscle_excitations_ref,
-#         x_ref[: biorbd_model.nbQ(), :].T,
-#         ode_solver=OdeSolver.RK4(),
-#         use_residual_torque=True,
-#         kin_data_to_track="markers",
-#     )
-#     sol = ocp.solve()
-#     sol.graphs(automatically_organize=False)
+def test_plot_merged_graphs():
+    # Load graphs_one_phase
+    from bioptim.examples.muscle_driven_ocp import muscle_excitations_tracker as ocp_module
+
+    bioptim_folder = os.path.dirname(ocp_module.__file__)
+
+    # Define the problem
+    model_path = bioptim_folder + "/models/arm26.bioMod"
+    biorbd_model = biorbd.Model(model_path)
+    final_time = 0.1
+    n_shooting = 5
+
+    # Generate random data to fit
+    np.random.seed(42)
+    t, markers_ref, x_ref, muscle_excitations_ref = ocp_module.generate_data(biorbd_model, final_time, n_shooting)
+
+    biorbd_model = biorbd.Model(model_path)  # To prevent from free variable, the model must be reloaded
+    ocp = ocp_module.prepare_ocp(
+        biorbd_model,
+        final_time,
+        n_shooting,
+        markers_ref,
+        muscle_excitations_ref,
+        x_ref[: biorbd_model.nbQ(), :].T,
+        ode_solver=OdeSolver.RK4(),
+        use_residual_torque=True,
+        kin_data_to_track="markers",
+    )
+    solver = Solver.IPOPT()
+    solver.set_maximum_iterations(1) # This is to prevent the solver from running too long before PR #551 is merged
+    sol = ocp.solve(solver)
+    sol.graphs(automatically_organize=False)
 
 
 def test_plot_graphs_multi_phases():
