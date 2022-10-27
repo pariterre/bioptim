@@ -62,7 +62,7 @@ def test_plot_merged_graphs():
         kin_data_to_track="markers",
     )
     solver = Solver.IPOPT()
-    solver.set_maximum_iterations(1) # This is to prevent the solver from running too long before PR #551 is merged
+    solver.set_maximum_iterations(1)  # This is to prevent the solver from running too long before PR #551 is merged
     sol = ocp.solve(solver)
     sol.graphs(automatically_organize=False)
 
